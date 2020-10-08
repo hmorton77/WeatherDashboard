@@ -4,6 +4,7 @@ var inputCombo;
 // convert input to city ID
 $(".submitBtn").on("click", function (event) {
   event.preventDefault();
+  //store 3 aspects of the input
   var cityName = document.getElementById("cityInput").value;
   var stateName = document.getElementById("stateInput").value;
   var nationName = document.getElementById("nationInput").value;
@@ -22,10 +23,16 @@ $(".submitBtn").on("click", function (event) {
   localStorage.setItem("everything", inputCombo);
 
   console.log("items stored!");
-  // for (var i=0; i < cityID.length; i++);
-  //   if (cityID[i].);
-});
 
+  for (var i = 0; i < cityID.length; i++) {
+    if (cityName && stateName && cityID[i].name == cityName && cityID[i].state == stateName) {
+      console.log(cityID[i].id);
+    } else if (cityName && nationName && cityID[i].name == cityName && cityID[i].country == nationName) {
+      console.log(cityID[i].id);
+    }
+  }
+});
+console.log(cityID[0].name);
 var queryURL5day = "api.openweathermap.org/data/2.5/forecast?q=" + idNum + "&appid=" + APIkey;
 
 // $.ajax({
