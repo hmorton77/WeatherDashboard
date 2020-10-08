@@ -10,10 +10,26 @@
     <form>
       <div class="form-group">
         <label for="exampleInputEmail1">Enter City</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Cleveland, OH" />`
+        <input type="city" class="form-control" id="cityInput" placeholder="Cleveland" />
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="form-group">
+        <label for="state">Enter 2 letter State abbreviation (if necessary) </label>
+        <input type="state" class="form-control" id="stateInput" placeholder="OH" />
+        <small id="emailHelp" class="form-text text-muted">For a US city this is REQUIRED</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Enter 2 letter Country abbreviation (if necessary) </label>
+        <input type="nation" class="form-control" id="nationInput" placeholder="US" />
+        <small id="emailHelp" class="form-text text-muted">
+          For non-US cities this is necessary. for a list of 2 letter country codes, click
+          <a href="https://www.iban.com/country-codes" target="_blank">Here</a>
+        </small>
+      </div>
+      <button type="submit" class="btn btn-primary submitBtn">Submit</button>
     </form>
   </body>
-  <script type="text/javascript" src="script.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script type="text/javascript" src="./js/script.js"></script>
+  <script type="text/javascript" src="./js/citylist.js"></script>
 </html>
