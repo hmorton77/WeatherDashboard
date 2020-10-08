@@ -2,7 +2,19 @@ var idNum;
 var APIkey = "6dadd3c90772780ec35050af315cf499";
 var queryURL5day;
 var queryURLtoday;
+var queryURLuv;
 var inputCombo;
+var historRow;
+var latVal;
+var lonVal;
+// current date:
+var todayDate = new Date();
+todayYear = todayDate.getFullYear();
+todayMonth = parseInt(todayDate.getMonth()) + 1;
+todayDay = todayDate.getDate();
+displayDate = todayMonth + "/" + todayDay + "/" + todayYear;
+console.log(displayDate);
+
 // convert input to city ID
 $(".submitBtn").on("click", function (event) {
   event.preventDefault();
@@ -35,6 +47,12 @@ $(".submitBtn").on("click", function (event) {
       break; //(there are 2 cities named Berlin in Germany and it is a pain in the butt to try to differentiate them)
     }
   }
+
+  historyRow = $("<div>");
+  historyRow.addClass("col-md-3");
+  historyRow.text(inputCombo);
+  $(".history").append(historyRow);
+
   queryURL5day = "https://api.openweathermap.org/data/2.5/forecast?id=" + idNum + "&units=imperial&appid=" + APIkey;
   queryURLtoday = "https://api.openweathermap.org/data/2.5/weather?id=" + idNum + "&units=imperial&appid=" + APIkey;
 
@@ -52,5 +70,35 @@ $(".submitBtn").on("click", function (event) {
     method: "GET",
   }).then(function (responsetoday) {
     console.log(responsetoday);
+    console.log(responsetoday.main.temp);
+    console.log(responsetoday.main.humidity);
+    console.log(responsetoday.wind.speed);
+    //UV index
+    latVal = responsetoday.coord.lat;
+    lonVal = responsetoday.coord.lon;
+    queryURLuv = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latVal + "&lon=" + lonVal + "&appid=" + APIkey;
+    $.ajax({
+      url: queryURLuv,
+      method: "GET",
+    }).then(function (responseUV) {
+      console.log(responseUV);
+
+      var uvVal = responseUV.value;
+      var uvNum = $("<span>");
+      uvNum.addClass("uvNum");
+      uvNum.text(uvVal);
+      $(".uvValtext").append(uvNum);
+      if (uvVal < 3 && uvVal > 0) {
+        $(".uvNum").attr("style", "background-color: #00ff00");
+      } else if (uvVal >= 3 && uvVal < 6) {
+        $(".uvNum").attr("style", "background-color: #ffff00");
+      } else if (uvVal >= 6 && uvVal < 8) {
+        $(".uvNUm").attr("style", "background-color: #ffa500");
+      } else if (uvVal >= 8 && uvVal < 11) {
+        $(".uvNum").attr("style", "background-color: #ff0000");
+      } else {
+        $(".uvNum").attr("style", "background-color: #ff00ff");
+      }
+    });
   });
 });
