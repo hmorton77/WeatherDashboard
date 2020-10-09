@@ -18,6 +18,8 @@ console.log(displayDate);
 // convert input to city ID
 $(".submitBtn").on("click", function (event) {
   event.preventDefault();
+  //Clear the previous 5 day forecast
+  $(".5day").innerHTML = "";
   //store 3 aspects of the input
   var cityName = document.getElementById("cityInput").value;
   var stateName = document.getElementById("stateInput").value;
@@ -58,25 +60,64 @@ $(".submitBtn").on("click", function (event) {
 
   console.log(queryURL5day);
   // ajax call for 5 day forecast
+  var day1;
+  var day2;
+  var day3;
+  var day4;
+  var day5;
+  var weatherArray;
   $.ajax({
     url: queryURL5day,
     method: "GET",
   }).then(function (response5day) {
     console.log(response5day);
+    //each weather forecast should be able to detect the time at noon of each day.
+    day1 = response5day.list[2];
+    day2 = response5day.list[10];
+    day3 = response5day.list[18];
+    day4 = response5day.list[26];
+    day5 = response5day.list[34];
+    //for each array, we will dynamically make a card.
+    weatherArray = [day1, day2, day3, day4, day5];
+    console.log(weatherArray);
+    for (var i = 0; i < weatherArray.length; i++) {
+      var cardEl = $("<div>");
+      cardEl.addClass("card");
+
+      var bodyEl = $("<div>");
+      bodyEl.addClass("card-body");
+
+      var titleEl = $("<h2>");
+      titleEl.addClass("card-title");
+      titleEl.text(weatherArray[i].dt_txt);
+
+      var textEltemp = $("<p>");
+      textEltemp.addClass("card-text");
+      textEltemp.text("Temperature: " + weatherArray[i].main.temp + "°F");
+
+      var textElhum = $("<p>");
+      textElhum.addClass("card-text");
+      textElhum.text("Humidity: " + weatherArray[i].main.humidity + "%");
+
+      cardEl.append(bodyEl);
+      bodyEl.append(titleEl);
+      bodyEl.append(textEltemp);
+      bodyEl.append(textElhum);
+      $(".5day").append(cardEl);
+    }
+
+    console.log(day1);
   });
+
   // ajax call for current weather
   $.ajax({
     url: queryURLtoday,
     method: "GET",
   }).then(function (responsetoday) {
-    console.log(responsetoday);
-    console.log(responsetoday.main.temp);
+    //adding the non UV Index values to current weather card
     $(".tempFtext").append(" " + responsetoday.main.temp + "°F");
-    console.log(responsetoday.main.humidity);
     $(".humidityText").append(" " + responsetoday.main.humidity + "%");
-    console.log(responsetoday.wind.speed);
     $(".windSpeedtext").append(" " + responsetoday.wind.speed + "mph");
-    console.log(responsetoday.weather[0].icon);
     var iconPic = responsetoday.weather[0].icon;
     //UV index
     latVal = responsetoday.coord.lat;
