@@ -8,3 +8,9 @@ body {
   background-color: #b3cccc;
   margin: 1em;
 }
+.historycard:hover {
+  background-color: gray;
+}
+.history {
+  margin-top: 1em;
+}
