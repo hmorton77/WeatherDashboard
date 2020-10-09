@@ -25,5 +25,5 @@ these history cards will be clickable, re-searching the place again.
 
 **on refresh, the history will be cleared**
 
-![pre-generated image](./iamges/Screenshot1.jpg)
-![pre-generated image](./iamges/Screenshot2.jpg)
+![pre-generated image](./images/Screenshot1.jpg)
+![pre-generated image](./images/Screenshot2.jpg)

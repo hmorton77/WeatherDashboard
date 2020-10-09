@@ -33,12 +33,6 @@ $(".submitBtn").on("click", function (event) {
   if (nationName) {
     inputCombo += ", " + nationName;
   }
-  // localStorage.setItem("city", cityName);
-  // localStorage.setItem("state", stateName);
-  // localStorage.setItem("nation", nationName);
-  localStorage.setItem("everything", inputCombo);
-
-  console.log("items stored!");
 
   checkIDnum();
 

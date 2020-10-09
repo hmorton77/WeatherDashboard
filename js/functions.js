@@ -5,7 +5,6 @@ function newDate() {
   todayMonth = parseInt(todayDate.getMonth()) + 1;
   todayDay = todayDate.getDate();
   displayDate = todayMonth + "/" + todayDay + "/" + todayYear;
-  console.log(displayDate);
 }
 
 function historyclick() {
@@ -27,7 +26,7 @@ function cards5day(response5day) {
   day5 = response5day.list[34];
   //for each array, we will dynamically make a card.
   weatherArray = [day1, day2, day3, day4, day5];
-  console.log(weatherArray);
+
   for (var i = 0; i < weatherArray.length; i++) {
     var cardEl = $("<div>");
     cardEl.addClass("card minicard col");
@@ -42,8 +41,6 @@ function cards5day(response5day) {
     imgEl5day = new Image();
     icon5day = weatherArray[i].weather[0].icon;
     imgEl5day.src = "https://openweathermap.org/img/wn/" + icon5day + "@2x.png";
-    console.log(icon5day);
-    console.log(imgEl5day.src);
 
     var textEltemp = $("<p>");
     textEltemp.addClass("card-text");
@@ -60,8 +57,6 @@ function cards5day(response5day) {
     bodyEl.append(textElhum);
     $(".5dayforecast").append(cardEl);
   }
-
-  console.log(day1);
 }
 
 var iconPic;
@@ -79,8 +74,6 @@ function cardsToday(responsetoday) {
     url: queryURLuv,
     method: "GET",
   }).then(function (responseUV) {
-    console.log(responseUV);
-
     var uvVal = responseUV.value;
     var uvNum = $("<span>");
     uvNum.addClass("uvNum");
