@@ -71,8 +71,13 @@ $(".submitBtn").on("click", function (event) {
   }).then(function (responsetoday) {
     console.log(responsetoday);
     console.log(responsetoday.main.temp);
+    $(".tempFtext").append(" " + responsetoday.main.temp + "°F");
     console.log(responsetoday.main.humidity);
+    $(".humidityText").append(" " + responsetoday.main.humidity + "%");
     console.log(responsetoday.wind.speed);
+    $(".windSpeedtext").append(" " + responsetoday.wind.speed + "mph");
+    console.log(responsetoday.weather[0].icon);
+    var iconPic = responsetoday.weather[0].icon;
     //UV index
     latVal = responsetoday.coord.lat;
     lonVal = responsetoday.coord.lon;
@@ -86,19 +91,25 @@ $(".submitBtn").on("click", function (event) {
       var uvVal = responseUV.value;
       var uvNum = $("<span>");
       uvNum.addClass("uvNum");
-      uvNum.text(uvVal);
+      uvNum.text(" " + uvVal);
       $(".uvValtext").append(uvNum);
-      if (uvVal < 3 && uvVal > 0) {
-        $(".uvNum").attr("style", "background-color: #00ff00");
-      } else if (uvVal >= 3 && uvVal < 6) {
-        $(".uvNum").attr("style", "background-color: #ffff00");
-      } else if (uvVal >= 6 && uvVal < 8) {
-        $(".uvNUm").attr("style", "background-color: #ffa500");
-      } else if (uvVal >= 8 && uvVal < 11) {
-        $(".uvNum").attr("style", "background-color: #ff0000");
+      //determining color of UV index number
+      if (uvVal < 3) {
+        $(".uvNum").css("background-color", "#00ff00");
+      } else if (uvVal < 6) {
+        $(".uvNum").css("background-color", "#ffff00");
+      } else if (uvVal < 8) {
+        $(".uvNum").css("background-color", "#ffa500");
+      } else if (uvVal < 11) {
+        $(".uvNum").css("background-color", "#ff0000");
       } else {
-        $(".uvNum").attr("style", "background-color: #ff00ff");
+        $(".uvNum").css("background-color", "#ff00ff");
       }
     });
+    //getting the whole header for the current weather card
+    var icon = new Image();
+    icon.src = "https://openweathermap.org/img/wn/" + iconPic + "@2x.png";
+    $(".card-title").text(inputCombo + " (" + displayDate + ") ");
+    $(".card-title").append(icon);
   });
 });
