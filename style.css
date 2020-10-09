@@ -1,12 +1,15 @@
 .minicard {
   display: inline-block;
-  margin: 1em;
+  margin: 0.5em;
   background-color: blue;
   color: white;
 }
 body {
   background-color: #b3cccc;
   margin: 1em;
+}
+.historycard {
+  margin: 0.2em;
 }
 .historycard:hover {
   background-color: gray;
