@@ -1,1 +1,10 @@
-
+.minicard {
+  display: inline-block;
+  margin: 1em;
+  background-color: blue;
+  color: white;
+}
+body {
+  background-color: #b3cccc;
+  margin: 1em;
+}

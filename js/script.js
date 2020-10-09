@@ -7,6 +7,8 @@ var inputCombo;
 var historRow;
 var latVal;
 var lonVal;
+var imgEl5day;
+var icon5day;
 // current date:
 var todayDate = new Date();
 todayYear = todayDate.getFullYear();
@@ -19,7 +21,7 @@ console.log(displayDate);
 $(".submitBtn").on("click", function (event) {
   event.preventDefault();
   //Clear the previous 5 day forecast
-  $(".5day").innerHTML = "";
+  $(".5dayforecast").innerHTML = "";
   //store 3 aspects of the input
   var cityName = document.getElementById("cityInput").value;
   var stateName = document.getElementById("stateInput").value;
@@ -33,9 +35,9 @@ $(".submitBtn").on("click", function (event) {
   if (nationName) {
     inputCombo += ", " + nationName;
   }
-  localStorage.setItem("city", cityName);
-  localStorage.setItem("state", stateName);
-  localStorage.setItem("nation", nationName);
+  // localStorage.setItem("city", cityName);
+  // localStorage.setItem("state", stateName);
+  // localStorage.setItem("nation", nationName);
   localStorage.setItem("everything", inputCombo);
 
   console.log("items stored!");
@@ -51,7 +53,7 @@ $(".submitBtn").on("click", function (event) {
   }
 
   historyRow = $("<div>");
-  historyRow.addClass("col-md-3");
+  historyRow.addClass("col card historycard");
   historyRow.text(inputCombo);
   $(".history").append(historyRow);
 
@@ -82,14 +84,20 @@ $(".submitBtn").on("click", function (event) {
     console.log(weatherArray);
     for (var i = 0; i < weatherArray.length; i++) {
       var cardEl = $("<div>");
-      cardEl.addClass("card");
+      cardEl.addClass("card minicard col");
 
       var bodyEl = $("<div>");
       bodyEl.addClass("card-body");
 
       var titleEl = $("<h2>");
       titleEl.addClass("card-title");
-      titleEl.text(weatherArray[i].dt_txt);
+      titleEl.text(todayMonth + "/" + (parseInt(todayDay) + 1 + parseInt(i)) + "/" + todayYear);
+
+      imgEl5day = new Image();
+      icon5day = weatherArray[i].weather[0].icon;
+      imgEl5day.src = "https://openweathermap.org/img/wn/" + icon5day + "@2x.png";
+      console.log(icon5day);
+      console.log(imgEl5day.src);
 
       var textEltemp = $("<p>");
       textEltemp.addClass("card-text");
@@ -101,9 +109,10 @@ $(".submitBtn").on("click", function (event) {
 
       cardEl.append(bodyEl);
       bodyEl.append(titleEl);
+      bodyEl.append(imgEl5day);
       bodyEl.append(textEltemp);
       bodyEl.append(textElhum);
-      $(".5day").append(cardEl);
+      $(".5dayforecast").append(cardEl);
     }
 
     console.log(day1);
@@ -115,9 +124,9 @@ $(".submitBtn").on("click", function (event) {
     method: "GET",
   }).then(function (responsetoday) {
     //adding the non UV Index values to current weather card
-    $(".tempFtext").append(" " + responsetoday.main.temp + "°F");
-    $(".humidityText").append(" " + responsetoday.main.humidity + "%");
-    $(".windSpeedtext").append(" " + responsetoday.wind.speed + "mph");
+    $(".tempFtext").text("Temperature: " + responsetoday.main.temp + "°F");
+    $(".humidityText").text("Humidity: " + responsetoday.main.humidity + "%");
+    $(".windSpeedtext").text("Wind Speed: " + responsetoday.wind.speed + "mph");
     var iconPic = responsetoday.weather[0].icon;
     //UV index
     latVal = responsetoday.coord.lat;
